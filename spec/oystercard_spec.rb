@@ -6,6 +6,10 @@ describe Oystercard do
     expect(subject.balance).to(eq(0))
   end
 
+  it "should have an empty list of journeys on initialization" do
+    expect(subject.journeys).to(eq([]))
+  end
+
   describe ".top_up" do
     it "should allow user to add money to balance with .top_up" do
       subject.top_up(15)
@@ -32,26 +36,76 @@ describe Oystercard do
   end
 
   describe ".touch_in" do 
+    let(:station) {double("station")}
+  
     it "should set in_journey to true" do 
       subject.top_up(20)
-      subject.touch_in
+      subject.touch_in(station)
       expect(subject.in_journey?).to(eq(true))
     end
 
     it "should raise an error if a users touches in with an insufficient balance" do 
-      expect{subject.touch_in}.to(raise_error("Minimum balance for a single journey is £1"))
+      expect{subject.touch_in(station)}.to(raise_error("Minimum balance for a single journey is £1"))
     end 
+
+    it "should store touch in station in entry_station variable" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      expect(subject.entry_station).to(eq(station))
+    end
+
+    # create a hash called current_journey. on touch push the entry station to entry key. 
+    #   on touch out pushes exit station to exit key
+
+    it "should store entry station variable to entry key in current_journey" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      expect(subject.current_journey[:entry]).to(eq(station))
+    end
+
+
   end
 
   describe ".touch_out" do 
+    let(:station) {double("station")}
+    let(:station2) {double("station 2")}
+
     it "should set in_journey to false" do 
-      subject.touch_out
+      subject.touch_out(station2)
       expect(subject.in_journey?).to(eq(false))
     end
 
     it "should reduce the balance by the minimum fare" do
       subject.top_up(20)
-      expect{subject.touch_out}.to change{subject.balance}.by(-1)
+      expect{subject.touch_out(station2)}.to change{subject.balance}.by(-1)
+    end
+
+    it "should set entry_station variable to nil" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      subject.touch_out(station2)
+      expect(subject.entry_station).to(eq(nil))
+    end
+
+    it "should store touch out station in exit_station variable" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      subject.touch_out(station2)
+      expect(subject.exit_station).to(eq(station2))
+    end
+
+    it "should store exit station variable to exit key in current_journey" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      subject.touch_out(station2)
+      expect(subject.current_journey[:exit]).to(eq(station2))
+    end
+
+    it "should push current_journey hash to journeys array" do
+      subject.top_up(20)
+      subject.touch_in(station)
+      subject.touch_out(station2)
+      expect(subject.journeys[0]).to(eq({entry: station, exit: station2}))
     end
   end
 end 

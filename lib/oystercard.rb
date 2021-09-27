@@ -1,6 +1,5 @@
 class Oystercard
-  attr_reader :balance
-  attr_reader :limit
+  attr_reader :balance, :limit, :entry_station, :journeys, :exit_station, :current_journey
 
   DEFAULT_LIMIT = 90
   MIN_BALANCE = 1
@@ -8,7 +7,12 @@ class Oystercard
   def initialize(balance = 0, limit = DEFAULT_LIMIT)
     @balance = balance
     @limit = limit
-    @in_journey = false 
+    @entry_station = nil 
+    @exit_station = nil
+    @journeys = []
+    @current_journey = {:entry => nil, :exit => nil}
+    #create a hash called current_journey. on touch push the entry station to entry key. 
+      #on touch out pushes exit station to exit key
   end 
 
   def top_up(money)
@@ -17,17 +21,21 @@ class Oystercard
   end
 
   def in_journey? 
-    @in_journey
+    @entry_station != nil
   end
 
-  def touch_in
+  def touch_in(station)
     raise "Minimum balance for a single journey is £#{MIN_BALANCE}" if @balance < 1
-    @in_journey = true 
+    @entry_station = station
+    @current_journey[:entry] = station
   end 
 
-  def touch_out
+  def touch_out(station)
     deduct(MIN_BALANCE)
-    @in_journey = false 
+    @entry_station = nil
+    @exit_station = station
+    @current_journey[:exit] = station
+    @journeys << @current_journey
   end 
 
   private
