@@ -20,15 +20,7 @@ describe Oystercard do
       expect{subject.top_up(91)}.to(raise_error("You have reached your 90 pound limit"))
     end
   end
-=begin
-  describe ".deduct" do 
-    it "should allow user to have their fare deducted from their card" do 
-      subject.top_up(30)
-      subject.deduct(10)
-      expect(subject.balance).to(eq(20))
-    end
-  end
-=end 
+
   describe ".in_journey?" do 
     it "should return a boolean value for whether in_journey is true or false" do 
       expect([true, false]).to(include(subject.in_journey?))
@@ -53,9 +45,6 @@ describe Oystercard do
       subject.touch_in(station)
       expect(subject.entry_station).to(eq(station))
     end
-
-    # create a hash called current_journey. on touch push the entry station to entry key. 
-    #   on touch out pushes exit station to exit key
 
     it "should store entry station variable to entry key in current_journey" do
       subject.top_up(20)

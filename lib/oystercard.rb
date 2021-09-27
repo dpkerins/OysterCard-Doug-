@@ -11,8 +11,6 @@ class Oystercard
     @exit_station = nil
     @journeys = []
     @current_journey = {:entry => nil, :exit => nil}
-    #create a hash called current_journey. on touch push the entry station to entry key. 
-      #on touch out pushes exit station to exit key
   end 
 
   def top_up(money)
