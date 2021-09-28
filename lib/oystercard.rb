@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :balance, :limit, :entry_station, :journeys, :exit_station, :current_journey
+  attr_reader :balance, :limit, :journeys, :current_journey
 
   DEFAULT_LIMIT = 90
   MIN_BALANCE = 1
@@ -23,22 +23,24 @@ class Oystercard
   end 
 
   def touch_out(station)
-    deduct(MIN_BALANCE)
     @current_journey.set_exit(station)
+    deduct()
+    log_journey
   end 
+
+  
+  private
 
   def log_journey
     @journeys << @current_journey
   end 
 
-  private
-
   def exceed_limit(money)
     (@balance + money ) > @limit
   end
 
-  def deduct(money)
-    @balance -= money
+  def deduct()
+    @balance -= @current_journey.fare
   end
 
 end

@@ -23,29 +23,19 @@ describe Oystercard do
 
   describe ".touch_in" do 
     let(:station) {double("station")}
-  
-    it "should set in_journey to true" do 
-      subject.top_up(20)
-      subject.touch_in(station)
-      expect(subject.in_journey?).to(eq(true))
-    end
 
     it "should raise an error if a users touches in with an insufficient balance" do 
       expect{subject.touch_in(station)}.to(raise_error("Minimum balance for a single journey is £1"))
-    end 
+    end
   end
 
   describe ".touch_out" do 
     let(:station) {double("station")}
     let(:station2) {double("station 2")}
 
-    it "should set in_journey to false" do 
-      subject.touch_out(station2)
-      expect(subject.in_journey?).to(eq(false))
-    end
-
     it "should reduce the balance by the minimum fare" do
       subject.top_up(20)
+      subject.touch_in(station)
       expect{subject.touch_out(station2)}.to change{subject.balance}.by(-1)
     end
 
@@ -53,7 +43,7 @@ describe Oystercard do
       subject.top_up(20)
       subject.touch_in(station)
       subject.touch_out(station2)
-      expect(subject.journeys[0]).to(eq({entry: station, exit: station2}))
+      expect(subject.journeys[0]).to(eq(subject.current_journey))
     end
   end
 end 
