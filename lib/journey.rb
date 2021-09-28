@@ -1,6 +1,6 @@
 class Journey 
-  attr_reader :entry_station
-  attr_reader :exit_station
+  attr_accessor :entry_station
+  attr_accessor :exit_station
   MIN_FARE = 1
 
   def initialize
