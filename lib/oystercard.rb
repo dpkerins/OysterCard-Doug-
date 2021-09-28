@@ -7,10 +7,8 @@ class Oystercard
   def initialize(balance = 0, limit = DEFAULT_LIMIT)
     @balance = balance
     @limit = limit
-    @entry_station = nil 
-    @exit_station = nil
     @journeys = []
-    @current_journey = {:entry => nil, :exit => nil}
+    
   end 
 
   def top_up(money)
@@ -18,21 +16,18 @@ class Oystercard
     @balance += money
   end
 
-  def in_journey? 
-    @entry_station != nil
-  end
-
-  def touch_in(station)
+  def touch_in(station, journey=Journey.new)
     raise "Minimum balance for a single journey is £#{MIN_BALANCE}" if @balance < 1
-    @entry_station = station
-    @current_journey[:entry] = station
+    @current_journey = journey
+    @current_journey.set_entry(station)
   end 
 
   def touch_out(station)
     deduct(MIN_BALANCE)
-    @entry_station = nil
-    @exit_station = station
-    @current_journey[:exit] = station
+    @current_journey.set_exit(station)
+  end 
+
+  def log_journey
     @journeys << @current_journey
   end 
 

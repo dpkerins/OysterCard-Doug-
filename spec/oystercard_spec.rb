@@ -21,12 +21,6 @@ describe Oystercard do
     end
   end
 
-  describe ".in_journey?" do 
-    it "should return a boolean value for whether in_journey is true or false" do 
-      expect([true, false]).to(include(subject.in_journey?))
-    end
-  end
-
   describe ".touch_in" do 
     let(:station) {double("station")}
   
@@ -39,20 +33,6 @@ describe Oystercard do
     it "should raise an error if a users touches in with an insufficient balance" do 
       expect{subject.touch_in(station)}.to(raise_error("Minimum balance for a single journey is £1"))
     end 
-
-    it "should store touch in station in entry_station variable" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      expect(subject.entry_station).to(eq(station))
-    end
-
-    it "should store entry station variable to entry key in current_journey" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      expect(subject.current_journey[:entry]).to(eq(station))
-    end
-
-
   end
 
   describe ".touch_out" do 
@@ -67,27 +47,6 @@ describe Oystercard do
     it "should reduce the balance by the minimum fare" do
       subject.top_up(20)
       expect{subject.touch_out(station2)}.to change{subject.balance}.by(-1)
-    end
-
-    it "should set entry_station variable to nil" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      subject.touch_out(station2)
-      expect(subject.entry_station).to(eq(nil))
-    end
-
-    it "should store touch out station in exit_station variable" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      subject.touch_out(station2)
-      expect(subject.exit_station).to(eq(station2))
-    end
-
-    it "should store exit station variable to exit key in current_journey" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      subject.touch_out(station2)
-      expect(subject.current_journey[:exit]).to(eq(station2))
     end
 
     it "should push current_journey hash to journeys array" do
