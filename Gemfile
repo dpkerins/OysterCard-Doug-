@@ -1,12 +1,13 @@
-# frozen_string_literal: true
+source 'https://rubygems.org'
 
-source "https://rubygems.org"
+ruby '3.0.2'
 
-# Specify your gem's dependencies in oyster.gemspec
-gemspec
+group :test do
+  gem 'rspec'
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+end
 
-gem "rake", "~> 13.0"
-
-gem "rspec", "~> 3.0"
-
-gem "rubocop", "~> 1.7"
+group :development, :test do
+  gem 'rubocop', '1.20'
+end

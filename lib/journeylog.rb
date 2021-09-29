@@ -1,47 +1,47 @@
 class JourneyLog 
   attr_reader :logs, :journey
+
   def initialize(journey_class= Journey)
     @logs = []
     @journey_class = journey_class
-    @journey = journey_class.new
+    new_journey
   end
-
-
 
   def start(station)
-    #if current journey is incomplete 
-    #return incomplete journey
-    #elsif current journey is nil
-    #create a new journey 
-    
-    journey.entry_station = station
-    current_journey
+    log_journey if current_journey == @journey && @journey.entry_station != nil
+    new_journey
+    @journey.entry_station = station
   end
 
-  
+  def new_journey
+    @journey = @journey_class.new
+  end
 
-  def current_journey
-    if @journey.entry_station != nil && @journey.exit_station != nil
-      push(@journey)
-      @journey = @journey.new
-    elsif @journey.entry_station == nil && @journey.exit_station != nil
-      @journey
-    elsif @journey.entry_station != nil && @journey.exit_station == nil
-      @journey
-    end
-  end 
+  def return_fare
+    @journey.fare
+  end
 
   def finish(station)
-    @journey.exit_station = station 
-    current_journey
-    
+    @journey.exit_station = station
+    log_journey
+  end
+
+  def journeys
+    dup @logs
   end
 
 
+  private
 
+    def current_journey
+      @journey if @journey.entry_station == nil && @journey.exit_station != nil
+      @journey if @journey.entry_station != nil && @journey.exit_station == nil
+      new_journey
+    end
 
-private 
-  def push(journey)
-    @logs << journey
-  end 
-end 
+    def log_journey
+      @logs << @journey
+    end
+
+end
+
