@@ -18,13 +18,13 @@ class Oystercard
 
   def touch_in(station)
     raise "Minimum balance for a single journey is £#{MIN_BALANCE}" if @balance < 1
-    deduct(@journeylog.journey.fare)
+    deduct(@journeylog.return_fare)
     @journeylog.start(station)
   end 
 
   def touch_out(station)
     @journeylog.finish(station)
-    deduct(@journeylog.journey.fare)
+    deduct(@journeylog.return_fare)
     @journeylog.new_journey
   end
   

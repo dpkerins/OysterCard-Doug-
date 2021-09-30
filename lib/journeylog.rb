@@ -8,7 +8,7 @@ class JourneyLog
   end
 
   def start(station)
-    log_journey if current_journey == @journey && @journey.entry_station != nil
+    log_journey if current_journey == @journey && !@journey.entry_station.nil?
     new_journey
     @journey.entry_station = station
   end
@@ -27,15 +27,15 @@ class JourneyLog
   end
 
   def journeys
-    dup @logs
+    @logs.dup.freeze
   end
 
 
   private
 
     def current_journey
-      @journey if @journey.entry_station == nil && @journey.exit_station != nil
-      @journey if @journey.entry_station != nil && @journey.exit_station == nil
+      @journey if @journey.entry_station.nil? && !@journey.exit_station.nil?
+      @journey if !@journey.entry_station.nil? && @journey.exit_station.nil?
       new_journey
     end
 

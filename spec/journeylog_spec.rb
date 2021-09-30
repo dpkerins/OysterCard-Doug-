@@ -37,5 +37,6 @@ describe JourneyLog do
       expect(subject.journey.exit_station).to eq(station2)
     end
   end
+  
 
 end 
