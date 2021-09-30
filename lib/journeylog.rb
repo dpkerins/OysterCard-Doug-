@@ -10,7 +10,7 @@ class JourneyLog
   def start(station)
     log_journey if current_journey == @journey && !@journey.entry_station.nil?
     new_journey
-    @journey.entry_station = station
+    @journey.add_entry_station(station)
   end
 
   def new_journey
@@ -22,7 +22,7 @@ class JourneyLog
   end
 
   def finish(station)
-    @journey.exit_station = station
+    @journey.add_exit_station(station)
     log_journey
   end
 
