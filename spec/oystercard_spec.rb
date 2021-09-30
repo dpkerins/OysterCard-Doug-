@@ -2,12 +2,14 @@ require "oystercard"
 
 describe Oystercard do 
 
-  it "should have a balance of zero by default on initialisation" do
-    expect(subject.balance).to(eq(0))
-  end
+  let(:richmond) {double("station", :zone => 4)}
+  let(:victoria) {double("station 2", :zone => 1)}
+  let(:paddington) {double("station 3", :zone => 1)}
 
-  it "should have an empty list of journeys on initialization" do
-    expect(subject.journeys).to(eq([]))
+  describe ".initialize" do
+    it "should have a balance of zero by default on initialisation" do
+      expect(subject.balance).to(eq(0))
+    end
   end
 
   describe ".top_up" do
@@ -29,21 +31,11 @@ describe Oystercard do
     end
   end
 
-  describe ".touch_out" do 
-    let(:station) {double("station")}
-    let(:station2) {double("station 2")}
-
+  describe ".touch_out" do  
     it "should reduce the balance by the minimum fare" do
       subject.top_up(20)
-      subject.touch_in(station)
-      expect{subject.touch_out(station2)}.to change{subject.balance}.by(-1)
-    end
-
-    it "should push current_journey hash to journeys array" do
-      subject.top_up(20)
-      subject.touch_in(station)
-      subject.touch_out(station2)
-      expect(subject.journeys[0]).to(eq(subject.current_journey))
+      subject.touch_in(victoria)
+      expect{subject.touch_out(paddington)}.to change{subject.balance}.by(-1)
     end
   end
 end 
