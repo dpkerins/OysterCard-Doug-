@@ -19,7 +19,7 @@ describe Oystercard do
     end
 
     it "should raise an error when trying to top up past the balance limit" do
-      expect { subject.top_up(91) }.to(raise_error("You have reached your 90 pound limit"))
+      expect { subject.top_up(91) }.to(raise_error("This would exceed your 90 pound limit! Please try a lower amount."))
     end
   end
 

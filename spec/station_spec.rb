@@ -10,6 +10,6 @@ describe Station do
     
     it "should have a zone variable that is accesible" do 
       expect(paddington.zone).to eq(1)
-    end 
+    end
   end
 end

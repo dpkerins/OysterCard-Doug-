@@ -11,7 +11,7 @@ class Oystercard
   end 
 
   def top_up(money)
-    raise "You have reached your #{@limit} pound limit" if exceed_limit(money)
+    raise "This would exceed your #{@limit} pound limit! Please try a lower amount." if exceed_limit(money)
     @balance += money
   end
 
@@ -19,7 +19,7 @@ class Oystercard
     raise "Minimum balance for a single journey is £#{MIN_BALANCE}" if @balance < 1
     deduct(@journeylog.return_fare)
     @journeylog.start(station)
-  end 
+  end
 
   def touch_out(station)
     @journeylog.finish(station)

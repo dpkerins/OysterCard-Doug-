@@ -19,7 +19,7 @@ describe Journey do
       subject.add_exit_station(victoria)
       expect(subject.exit_station).to(eq(victoria))
     end
-  end 
+  end
 
   describe ".fare" do
     it "should return £4 fare if journey includes entry and exit stations" do
