@@ -1,7 +1,7 @@
 class JourneyLog 
   attr_reader :logs, :journey
 
-  def initialize(journey_class= Journey)
+  def initialize(journey_class = Journey)
     @logs = []
     @journey_class = journey_class
     new_journey
@@ -30,18 +30,16 @@ class JourneyLog
     @logs.dup.freeze
   end
 
-
   private
 
-    def current_journey
-      @journey if @journey.entry_station.nil? && !@journey.exit_station.nil?
-      @journey if !@journey.entry_station.nil? && @journey.exit_station.nil?
-      new_journey
-    end
+  def current_journey
+    @journey if @journey.entry_station.nil? && !@journey.exit_station.nil?
+    @journey if !@journey.entry_station.nil? && @journey.exit_station.nil?
+    new_journey
+  end
 
-    def log_journey
-      @logs << @journey
-    end
+  def log_journey
+    @logs << @journey
+  end
 
 end
-

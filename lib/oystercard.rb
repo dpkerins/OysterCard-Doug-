@@ -7,8 +7,7 @@ class Oystercard
   def initialize(balance = 0, limit = DEFAULT_LIMIT, journeylog_class = JourneyLog)
     @balance = balance
     @limit = limit
-    @journeylog = journeylog_class.new
-    
+    @journeylog = journeylog_class.new  
   end 
 
   def top_up(money)
@@ -31,7 +30,7 @@ class Oystercard
   private
 
   def exceed_limit(money)
-    (@balance + money ) > @limit
+    (@balance + money) > @limit
   end
 
   def deduct(fare)

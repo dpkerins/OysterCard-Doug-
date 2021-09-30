@@ -1,7 +1,7 @@
 require "station"
 
 describe Station do 
-  let(:paddington) {Station.new("Paddington", 1)}
+  let(:paddington) { Station.new("Paddington", 1) }
 
   describe ".initialize" do
     it "should have a name variable that is accessible" do
@@ -12,4 +12,4 @@ describe Station do
       expect(paddington.zone).to eq(1)
     end 
   end
-end 
+end

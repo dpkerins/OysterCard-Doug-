@@ -1,9 +1,9 @@
 require "journeylog"
 
 describe JourneyLog do 
-  let(:richmond) {double("station", :zone => 4)}
-  let(:victoria) {double("station 2", :zone => 1)}
-  let(:paddington) {double("station 3", :zone => 1)}
+  let(:richmond) { double("station", :zone => 4) }
+  let(:victoria) { double("station 2", :zone => 1) }
+  let(:paddington) { double("station 3", :zone => 1) }
 
   describe ".initialize" do
     it "should have an empty list of previous journeys on initialization" do
@@ -45,4 +45,4 @@ describe JourneyLog do
   end
   
 
-end 
+end

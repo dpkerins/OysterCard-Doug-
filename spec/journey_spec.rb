@@ -2,10 +2,10 @@ require "journey"
 
 describe Journey do
 
-  let(:oystercard) {double("oystercard")}
-  let(:richmond) {double("station", :zone => 4)}
-  let(:victoria) {double("station 2", :zone => 1)}
-  let(:paddington) {double("station 3", :zone => 1)}
+  let(:oystercard) { double("oystercard") }
+  let(:richmond) { double("station", :zone => 4) }
+  let(:victoria) { double("station 2", :zone => 1) }
+  let(:paddington) { double("station 3", :zone => 1) }
   
 
   describe ".current_journey" do
